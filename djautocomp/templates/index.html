@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+        <script type="text/javascript" src="{% static 'js/autocomplete_customer.js' %}"></script>
+    </head>
+    <body>
+        <form method="post" action="/save_customer/">{% csrf_token %}
+
+            <table width="100%">
+                <tr><td><label for="id_email">Email:</label></td>
+                    <td>{{ frmCustomer.email }}
+                </td></tr>
+                <tr><td><label for="id_address_street">Street:</label></td>
+                    <td>{{ frmCustomer.address_street }}
+                </td></tr>
+                <tr><td><label for="id_address_house">House:</label></td>
+                    <td>{{ frmCustomer.address_house }}
+                </td></tr>
+                <tr><td><label for="id_address_flat">Flat:</label></td>
+                    <td>{{ frmCustomer.address_flat }}
+                </td></tr>
+                <tr><td><label for="id_address_postal_code">Postal Code:</label></td>
+                    <td>{{ frmCustomer.address_postal_code }}
+                </td></tr>
+                <tr><td><label for="id_address_comment">Postal Code:</label></td>
+                    <td>{{ frmCustomer.address_comment }}
+                </td></tr>
+                <tr><td><label for="id_phone">Phone:</label></td>
+                    <td>{{ frmCustomer.phone }}
+            </td></tr>
+        </table>
+
+        <button class="btn btn-primary" type="submit">Save</button>
+    </form>
+</body>
+</html>
