@@ -13,6 +13,10 @@ def home(request):
     c = {'frmCustomer': CustomerForm()}
     return render_to_response('index.html', c, context_instance=RequestContext(request))
 
+def address_lookup(request):
+    c = {}
+    return render_to_response('auto_address.html', c, context_instance=RequestContext(request))
+
 def customer_lookup(request, phone):
     data = []
     try:

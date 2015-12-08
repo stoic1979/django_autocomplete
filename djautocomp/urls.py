@@ -21,4 +21,7 @@ urlpatterns = [
     url(r'^$', 'autocomp.views.home', name='home'),
     url(r'customer_lookup/(\d+)$', 'autocomp.views.customer_lookup', name='customer_lookup'),
     url(r'get_phones/$', 'autocomp.views.get_phones', name='get_phones'),
+
+    # auto complete address
+    url(r'address_lookup/$', 'autocomp.views.address_lookup', name='address_lookup'),
 ]
