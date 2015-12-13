@@ -5,12 +5,15 @@
         <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
-        <script type="text/javascript" src="{% static 'js/autocomplete_customer.js' %}"></script>
     </head>
     <body>
         <form method="post" action="/save_customer/">{% csrf_token %}
 
             <table width="100%">
+                <tr>
+                    <td> <h3>Address Lookup</h3><br> </td>
+                    <td><input id="geocomplete" type="text" placeholder="Type address to lookup" value=""/><br></td>
+                </tr>
                 <tr><td><label for="id_email">Email:</label></td>
                     <td>{{ frmCustomer.email }}
                 </td></tr>
@@ -26,7 +29,7 @@
                 <tr><td><label for="id_address_postal_code">Postal Code:</label></td>
                     <td>{{ frmCustomer.address_postal_code }}
                 </td></tr>
-                <tr><td><label for="id_address_comment">Postal Code:</label></td>
+                <tr><td><label for="id_address_comment">Addess Comment:</label></td>
                     <td>{{ frmCustomer.address_comment }}
                 </td></tr>
                 <tr><td><label for="id_phone">Phone:</label></td>
@@ -37,4 +40,7 @@
         <button class="btn btn-primary" type="submit">Save</button>
     </form>
 </body>
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+        <script type="text/javascript" src="{% static 'js/jquery.geocomplete.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/autocomplete_customer.js' %}"></script>
 </html>

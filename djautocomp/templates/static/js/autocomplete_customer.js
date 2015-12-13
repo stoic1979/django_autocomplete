@@ -55,3 +55,52 @@ $(document).ready(function() {
     });
 
 });//ready
+
+
+///////////////////////////////////////////////////////////////////////////////
+//   ADDRESS AUTOCOMPLETE CODE FOLLOWS
+///////////////////////////////////////////////////////////////////////////////
+
+// convenience function to dump a javascript variable
+function dumpObject(object) {
+    var output = '';
+    for (var property in object) {
+        output += property + ': ' + object[property]+'; \n';
+    }
+    alert(output);
+}
+
+// initializing geocomplete 
+$(function(){
+    $("#geocomplete").geocomplete({
+        details: "form",
+        types: ["geocode", "establishment"],
+    });
+});
+
+// event handler when getting address result
+$("#geocomplete")
+    .geocomplete()
+    .bind("geocode:result", function(event, result){
+
+        var house   = result.address_components[0].short_name;
+        var street  = result.address_components[1].long_name;
+        var flat    = result.address_components[2].long_name;
+        var city    = result.locality;
+        var state   = result.administrative_area_level_1;
+        var country = result.country;
+
+        // Zip is the last element inside the address components of Google API result
+        var zip = result.address_components[result.address_components.length - 1].long_name;
+
+        $("#id_address_street").val(street);
+        $("#id_address_house").val(house);
+        $("#id_address_flat").val(flat);
+        $("#id_address_postal_code").val(zip);
+
+        // checking address components
+        //for(i=0; i< result.address_components.length; i++) {
+        //dumpObject(result.address_components[i]);
+        //}
+
+});
