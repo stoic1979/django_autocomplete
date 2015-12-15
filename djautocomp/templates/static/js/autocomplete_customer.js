@@ -82,25 +82,46 @@ $(function(){
 $("#geocomplete")
     .geocomplete()
     .bind("geocode:result", function(event, result){
-
-        var house   = result.address_components[0].short_name;
-        var street  = result.address_components[1].long_name;
+        
+        var house   = result.address_components[0].short_name; 
         var flat    = result.address_components[2].long_name;
-        var city    = result.locality;
         var state   = result.administrative_area_level_1;
         var country = result.country;
+        
+        var streetNo  = "";
+        var street    = "";
+        var city      = "";
+        var zip       = 0;
 
-        // Zip is the last element inside the address components of Google API result
-        var zip = result.address_components[result.address_components.length - 1].long_name;
+        // checking address components
+        for(i=0; i< result.address_components.length; i++) {
+            //dumpObject(result.address_components[i]);
+            
+            var types = result.address_components[i].types;
 
-        $("#id_address_street").val(street);
+            if($.inArray("street_number", types) != -1) {
+                streetNo = result.address_components[i].long_name;
+                continue;
+            }
+
+            if($.inArray("route", types) != -1){
+                street = result.address_components[i].long_name;
+                continue;
+            }
+
+            if($.inArray("postal_code", types) != -1) {
+                zip = result.address_components[i].long_name;
+                continue;
+            }
+
+            if($.inArray("locality", types)  != -1 && $.inArray("political", types) != -1) {
+                city = result.address_components[i].long_name;
+                continue;
+            }
+        }
+
+        $("#id_address_street").val(streetNo);
         $("#id_address_house").val(house);
         $("#id_address_flat").val(flat);
         $("#id_address_postal_code").val(zip);
-
-        // checking address components
-        //for(i=0; i< result.address_components.length; i++) {
-        //dumpObject(result.address_components[i]);
-        //}
-
 });
