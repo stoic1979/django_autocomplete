@@ -70,47 +70,36 @@ function dumpObject(object) {
     alert(output);
 }
 
-// initializing geocomplete 
-$(function(){
-    $("#geocomplete").geocomplete({
-        details: "form",
-        types: ["geocode", "establishment"],
-    });
-});
+function initMap() {
 
-// event handler when getting address result
-$("#geocomplete")
-    .geocomplete()
-    .bind("geocode:result", function(event, result){
-        
-        var house   = result.address_components[0].short_name; 
-        var flat    = result.address_components[2].long_name;
-        var state   = result.administrative_area_level_1;
-        var country = result.country;
-        
-        var streetNo  = "";
-        var street    = "";
-        var city      = "";
-        var zip       = 0;
+    var house    = "";
+    var street   = "";
+    var city     = "";
 
-        // checking address components
+    var input = (document.getElementById('geocomplete'));
+
+    var autocomplete = new google.maps.places.Autocomplete(input);
+
+    autocomplete.addListener('place_changed', function() {
+
+        var result = autocomplete.getPlace();
+
+        if (!result.geometry) {
+            //window.alert("Autocomplete's returned place contains no geometry");
+            return;
+        }
+
         for(i=0; i< result.address_components.length; i++) {
-            //dumpObject(result.address_components[i]);
-            
+
             var types = result.address_components[i].types;
 
             if($.inArray("street_number", types) != -1) {
-                streetNo = result.address_components[i].long_name;
-                continue;
-            }
-
-            if($.inArray("route", types) != -1){
                 street = result.address_components[i].long_name;
                 continue;
             }
 
-            if($.inArray("postal_code", types) != -1) {
-                zip = result.address_components[i].long_name;
+            if($.inArray("route", types) != -1) {
+                house = result.address_components[i].long_name;
                 continue;
             }
 
@@ -118,10 +107,14 @@ $("#geocomplete")
                 city = result.address_components[i].long_name;
                 continue;
             }
+            //dumpObject(result.address_components[i]);
         }
 
-        $("#id_address_street").val(streetNo);
+
+        $("#id_address_street").val(street);
         $("#id_address_house").val(house);
-        $("#id_address_flat").val(flat);
-        $("#id_address_postal_code").val(zip);
-});
+
+        alert("street=" + street + "\nhouse=" + house + "\ncity=" + city);
+
+    });
+}//initMap
